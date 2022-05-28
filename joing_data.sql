@@ -18,7 +18,7 @@ FROM "translated-title"
 QUALIFY ROW_NUMBER() OVER (PARTITION BY "id" ORDER BY "id" DESC NULLS LAST) = 1;
 
 -- step 03 we can join the the translated and untranslated data
-update "clean_united" set id = trim(id);
+UPDATE "clean_united" SET id = trim(id);--again with the white spaces, since google translate sometimes creates inconsistencies
 
 CREATE OR REPLACE TABLE "clean_united_translated" AS 
 
