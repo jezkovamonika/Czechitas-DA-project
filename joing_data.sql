@@ -1,4 +1,4 @@
---step 01 first we used union to connect all the translated tables for example for title we used 
+--step 01 first we used union to connect all the translated tables, for example for title we used this
 
 CREATE TABLE "translated-title" AS 
 
