@@ -35,4 +35,4 @@ ON c.id = txt."id";
 
 --step 04 making sure there is no untranslated text (we don't mind untranslated title or perex since we know we have scraped some articles that do not have title or perex)
 CREATE TABLE "untranslated" AS
-SELECT * FROM "clean_united_translated" WHERE "translatedText" IS null;
+SELECT * FROM "clean_united_translated" WHERE "translatedText" IS NULL;
