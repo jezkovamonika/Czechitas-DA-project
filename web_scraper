@@ -1,3 +1,6 @@
+// settings for web scraper
+
+
 async function pageFunction(context) {
     // jQuery is handy for finding DOM elements and extracting data from them.
     // To use it, make sure to enable the "Inject jQuery" option.
