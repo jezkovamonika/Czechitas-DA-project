@@ -1,0 +1,144 @@
+//We used this SQL code to clean the data, prepare the data for translation and create a unique ID
+
+/* ===== CODE: Unor01_Step1 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean" AS
+
+SELECT 
+   SPLIT("pageDate", ' ')[0]:: TIME AS "ArticleTime"
+  ,SPLIT("pageDate", ' ')[1] AS "ArticleDate" 
+  ,SPLIT("pageDate", ' ')[2] AS "Edit"
+  ,SPLIT("pageDate", ' ')[3]:: TIME AS "EditTime"
+  ,SPLIT("pageDate", ' ')[4] AS "EditDate"
+  ,"pageTitle" AS "Title"
+  ,"pageOpener" AS "Perex"
+  ,"fullText" AS "Text"
+  ,"url"
+
+FROM 
+"unor01dirty";
+
+
+/* ===== CODE: Unor01_Step2 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean"AS
+
+SELECT
+     "ArticleDate"
+    ,"ArticleTime"
+    ,SUBSTRING("Edit",2,8) AS "Edited"
+    ,SUBSTRING("EditDate",2,9) AS "EditDate"
+    ,"EditTime"
+    ,"Title"
+    ,"Perex"
+    ,"Text"
+    ,"url"    
+
+FROM "unor_01_clean";
+
+
+/* ===== CODE: Unor01_Step3 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean" AS
+
+SELECT
+     SPLIT("ArticleDate", '.')[0] AS ARTDAY
+     ,SPLIT("ArticleDate", '.')[1] AS ARTMONTH
+     ,SPLIT("ArticleDate", '.')[2] AS ARTYEAR
+    ,"ArticleTime"
+    ,"Edited"
+    ,CASE
+        WHEN "Edited" ILIKE 'обновлен' THEN 'Yes'
+        ELSE NULL
+     END AS "ArticleEdited"
+    ,SPLIT("EditDate", '.')[0] AS EDITDAY
+    ,SPLIT("EditDate", '.')[1] AS EDITMONTH
+    ,SPLIT("EditDate", '.')[2] AS EDITYEAR
+    ,"EditTime"
+    ,"Title"
+    ,"Perex"
+    ,"Text"
+    ,"url"    
+
+FROM "unor_01_clean";
+
+
+/* ===== CODE: Unor01_Step4 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean" AS
+
+SELECT 
+    DATE_FROM_PARTS(ARTYEAR, ARTMONTH, ARTDAY) AS "ArticleDate"
+   ,"ArticleTime"
+   ,"ArticleEdited"
+   ,DATE_FROM_PARTS(EDITYEAR, EDITMONTH, EDITDAY) AS "EditDate"
+   ,"EditTime"
+   ,"Title"
+   ,"Perex"
+   ,"Text"
+   ,"url"
+       
+FROM "unor_01_clean"
+;
+
+
+/* ===== CODE: Unor01_Step5 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean" AS
+
+SELECT 
+   "ArticleDate"
+   ,"ArticleTime"
+   ,"ArticleEdited"
+   ,"EditDate"
+   ,"EditTime"
+   ,"Title"
+   ,"Perex"
+   ,"Text"
+   ,"url"
+   ,REPLACE("url",'https://',' ') AS URL_NEW
+   ,REPLACE (URL_NEW, '.html', ' ') as "ID"
+   
+   
+FROM "unor_01_clean"
+WHERE "ArticleDate" BETWEEN '2022-02-01' AND '2022-02-07'
+;
+
+
+/* ===== CODE: Unor01_Step6 ===== */
+
+CREATE OR REPLACE TABLE "unor_01_clean" AS
+ 
+SELECT
+    "ID"
+    ,"ArticleDate"
+   ,"ArticleTime"
+   ,"ArticleEdited"
+   ,"EditDate"
+   ,"EditTime"
+   ,"Title"
+   ,"Perex"
+   ,"Text"
+   ,"url"
+
+FROM "unor_01_clean";
+
+/* ===== BLOCK: Block 7 ===== */
+
+/* ===== CODE: Unor03_Step1 ===== */
+
+CREATE OR REPLACE TABLE "unor_03_clean" AS
+
+SELECT 
+   SPLIT("pageDate", ' ')[0]:: TIME AS "ArticleTime"
+  ,SPLIT("pageDate", ' ')[1] AS "ArticleDate" 
+  ,SPLIT("pageDate", ' ')[2] AS "Edit"
+  ,SPLIT("pageDate", ' ')[3]:: TIME AS "EditTime"
+  ,SPLIT("pageDate", ' ')[4] AS "EditDate"
+  ,"pageTitle" AS "Title"
+  ,"pageOpener" AS "Perex"
+  ,"fullText" AS "Text"
+  ,"url"
+
+FROM 
+"unor03dirty";
